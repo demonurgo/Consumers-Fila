@@ -1,0 +1,34 @@
+version: '3'
+services:
+  processado_consumer:
+    image: php-app
+    container_name: processado_consumer
+    networks:
+      - gkaizen-gestor_my_network
+    command: php processado_consumer.php
+
+  send_consumer:
+    image: php-app
+    container_name: send_consumer
+    networks:
+      - gkaizen-gestor_my_network
+    command: php send_consumer.php
+
+  update_consumer:
+    image: php-app
+    container_name: update_consumer
+    networks:
+      - gkaizen-gestor_my_network
+    command: php update_consumer.php
+
+  upsert_consumer:
+    image: php-app
+    container_name: upsert_consumer
+    networks:
+      - gkaizen-gestor_my_network
+    command: php upsert_consumer.php
+
+
+networks:
+  gkaizen-gestor_my_network:
+    external: true
