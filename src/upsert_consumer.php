@@ -21,8 +21,9 @@ $callbackUpdate = function ($msg) use ($pdo) {
     $conversation = $data['data']['message']['conversation'] ?? null;
     $processadoId = $data['data']['key']['id'] ?? null;
     $senderTimestamp = $data['data']['message']['messageContextInfo']['deviceListMetadata']['senderTimestamp'] ?? null;
+    $selectedDisplayText = $data['data']['message']['templateButtonReplyMessage']['selectedDisplayText'] ?? null;
 
-    if (!$event || !$remoteJidRaw || !$conversation || !$senderTimestamp) {
+    if (!$event || !$remoteJidRaw || !$senderTimestamp || (!$conversation && !$selectedDisplayText)) {
         echo "Erro: Campos obrigatórios ausentes na mensagem.\n";
         $msg->ack();
         return;
@@ -69,8 +70,17 @@ $callbackUpdate = function ($msg) use ($pdo) {
 
         // Mapear o status baseado em contactMessage
         if ($event === 'messages.upsert') {
-            $status = 'Resposta: ' . $conversation;
-        } else {
+            if ($selectedDisplayText) {
+                    $status = "Botão '{$selectedDisplayText}' clicado";
+
+        
+
+            } else {
+
+                $status = 'Resposta: ' . $conversation;
+            }
+
+            } else{
             echo "Evento não é 'messages.upsert'. Nenhuma ação será realizada para esta mensagem.\n";
             $msg->ack(); // Confirma o processamento da mensagem
             return;

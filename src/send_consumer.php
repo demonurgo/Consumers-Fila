@@ -93,8 +93,14 @@ $callback2 = function ($msg) use ($pdo) {
         }
 
 
-            // Extrai os campos 'event' e 'date_time' da mensagem
-            $event = isset($data['event']) ? 'MENSAGEM ENVIADA' : null;
+                        // Extrai os campos 'event' e 'date_time' da mensagem
+                if (isset($data['data']['message']['contactMessage'])) {
+                    $event = 'MENSAGEM DE CONTATO ENVIADA';
+                } else {
+                    // Se 'contactMessage' não estiver setado, use o valor de 'data["event"]'
+                    $event = $data['event'] ?? 'MENSAGEM ENVIADA';
+                }
+
             $date_time = $data['date_time'] ?? null;
 
             if (!$event || !$date_time) {

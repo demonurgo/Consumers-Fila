@@ -1,0 +1,34 @@
+# Arquivos de ambiente (contêm informações sensíveis)
+.env
+.env_producao
+
+# Dependências locais do Composer (serão instaladas no container)
+vendor/
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
+
+# Arquivos de configuração do IDE
+.idea/
+.vscode/
+
+# Logs e temporários
+*.log
+tmp/
+cache/
+
+# Arquivos do Git
+.git/
+.gitignore
+
+# Arquivos auxiliares
+estrutura_projeto.txt
+
+# Arquivos de segurança
+*.pem
+*.key
+
+# Outros
+node_modules/
+npm-debug.log

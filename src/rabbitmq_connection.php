@@ -1,13 +1,19 @@
 <?php
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
+use Dotenv\Dotenv;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 
-$host_rmq = 'qw.gkaizen.com.br';
-$port_rmq = 5672;
-$user_rmq = 'gkaizen';
-$password_rmq = 'KTmfVZWGdUNJLuiGdijy';
-$vhost_rmq = 'homolog';
+// Carregar as variáveis de ambiente do arquivo .env
+$dotenv = Dotenv::createImmutable(__DIR__ . '/..');
+$dotenv->load();
+
+// Obter as variáveis de ambiente
+$host_rmq = $_ENV['RABBITMQ_HOST'];
+$port_rmq = $_ENV['RABBITMQ_PORT'];
+$user_rmq = $_ENV['RABBITMQ_USER'];
+$password_rmq = $_ENV['RABBITMQ_PASSWORD'];
+$vhost_rmq = $_ENV['RABBITMQ_VHOST'];
 
 // Conexão com RabbitMQ
 try {

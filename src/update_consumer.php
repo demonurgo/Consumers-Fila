@@ -7,6 +7,7 @@ $queue_rmq = 'gkaizen.messages.update';
 echo " [*] Aguardando mensagens da fila '$queue_rmq'. Para sair pressione CTRL+C\n";
 
 $callbackUpdate = function ($msg) use ($pdo) {
+
     $data = json_decode($msg->body, true);
 
     if (json_last_error() !== JSON_ERROR_NONE) {
@@ -15,9 +16,17 @@ $callbackUpdate = function ($msg) use ($pdo) {
         return;
     }
 
+    // Exibir a mensagem bruta recebida
+echo "Mensagem recebida: " . $msg->body . "\n";
+
+// Exibir os dados decodificados
+echo "Dados decodificados: " . print_r($data, true) . "\n";
+
+    //echo "Dados decodificados: " . print_r($data, true) . "\n";
+
     // Extrai os campos necessários da mensagem
     $status = $data['data']['status'] ?? null;
-    $processadoId = $data['data']['id'] ?? null;
+    $processadoId = $data['data']['keyId'] ?? null;
     $date_time = $data['date_time'] ?? null;
 
     if (!$processadoId || !$date_time) {

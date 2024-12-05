@@ -1,9 +1,18 @@
 <?php
-$host_db = 'postgres'; // Nome do serviço no docker-compose.yml
-$db   = 'dbgestorkaizenlicencas';
-$user_db = 'kaisen';
-$pass_db = 'Gnr83Sbv2SdM';
-$charset = 'utf8';
+require __DIR__ . '/../vendor/autoload.php';
+
+use Dotenv\Dotenv;
+
+// Carregar as variáveis de ambiente do arquivo .env
+$dotenv = Dotenv::createImmutable(__DIR__ . '/..');
+$dotenv->load();
+
+// Obter as variáveis de ambiente
+$host_db = $_ENV['DB_HOST'];
+$db = $_ENV['DB_NAME'];
+$user_db = $_ENV['DB_USER'];
+$pass_db = $_ENV['DB_PASS'];
+$charset = $_ENV['DB_CHARSET'];
 
 $dsn = "pgsql:host=$host_db;dbname=$db;options='--client_encoding=$charset'";
 
