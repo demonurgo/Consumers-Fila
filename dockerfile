@@ -11,8 +11,8 @@ RUN apt-get update && apt-get install -y \
     libpq-dev \
     && docker-php-ext-install sockets zip pgsql pdo_pgsql \
     && pecl install amqp \
-    && docker-php-ext-enable amqp \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+    && docker-php-ext-enable amqp
+    #&& apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Definir o diretório de trabalho
 WORKDIR /app
@@ -21,16 +21,18 @@ WORKDIR /app
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Copiar o composer.json e o composer.lock
-COPY composer.json composer.lock ./
+
+COPY composer.json ./
 
 # Instalar as dependências (incluindo o phpdotenv)
 RUN composer install --no-dev --optimize-autoloader
+RUN composer update
 
 # Copiar o restante dos arquivos da aplicação
 COPY src/ ./src/
 
 # Se houver arquivos adicionais necessários no diretório raiz, como o arquivo .env, copie-os também
-COPY .env ./
+#COPY .env ./
 
 # Otimizar o autoloader do Composer
 RUN composer dump-autoload --optimize
