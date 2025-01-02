@@ -18,13 +18,15 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /app
 
 # Instalar o Composer
-#RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Copiar o composer.json e o composer.lock
-COPY composer.json composer.lock ./
+
+COPY composer.json ./
 
 # Instalar as dependências (incluindo o phpdotenv)
 RUN composer install --no-dev --optimize-autoloader
+RUN composer update
 
 # Copiar o restante dos arquivos da aplicação
 COPY src/ ./src/
