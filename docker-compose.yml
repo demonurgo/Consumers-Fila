@@ -2,7 +2,7 @@ services:
   processado_consumer:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: dockerfile
     image: php-app:latest
     container_name: processado_consumer
     networks:
