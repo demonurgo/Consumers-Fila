@@ -15,6 +15,12 @@ $callbackUpdate = function ($msg) use ($pdo) {
         return;
     }
 
+            // Exibir a mensagem bruta recebida
+    echo "Mensagem recebida: " . $msg->body . "\n";
+
+    // Exibir os dados decodificados
+    echo "Dados decodificados: " . print_r($data, true) . "\n";
+
     // Extrai os campos necessários da mensagem
     $event = $data['event'] ?? null;
     $remoteJidRaw = $data['data']['key']['remoteJid'] ?? null;
@@ -145,11 +151,12 @@ $callbackUpdate = function ($msg) use ($pdo) {
         // **Atualizar a coluna clu_telefoneverificado se a mensagem for "Contato salvo"**
         if (strtolower(trim($conversation)) === 'contato salvo') {
             $updateQuery = 'UPDATE "clienteusuario_clu" SET "clu_telefoneverificado" = 1 WHERE "clu_id" = :clu_id';
+            echo $updateQuery;
             $stmtUpdate = $pdoInstancia->prepare($updateQuery);
             $stmtUpdate->bindParam(':clu_id', $cluId);
 
             if ($stmtUpdate->execute()) {
-                echo "Atualizado clu_telefoneverificado para 1 no clu_usuario com sucesso.\n";
+                echo "Atualizado clu_telefoneverificado para 1 no clienteusuario_clu com sucesso.\n";
             } else {
                 echo "Erro ao atualizar clu_telefoneverificado no clu_usuario.\n";
                 $errorInfo = $stmtUpdate->errorInfo();

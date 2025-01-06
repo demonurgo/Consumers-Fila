@@ -1,6 +1,6 @@
 # Arquivos de ambiente (contêm informações sensíveis)
-.env
-.env_producao
+#.env
+#.env_producao
 
 # Dependências locais do Composer (serão instaladas no container)
 vendor/

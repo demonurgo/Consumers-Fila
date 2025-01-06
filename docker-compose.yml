@@ -2,11 +2,9 @@ services:
   processado_consumer:
     build:
       context: .
-      dockerfile: dockerfile
-    image: php-app
+      dockerfile: Dockerfile
+    image: php-app:latest
     container_name: processado_consumer
-    volumes:
-      - .:/app
     networks:
       - gkaizen-gestor_my_network
     env_file:
@@ -15,13 +13,8 @@ services:
     command: php processado_consumer.php
 
   send_consumer:
-    build:
-      context: .
-      dockerfile: dockerfile
-    image: php-app
+    image: php-app:latest
     container_name: send_consumer
-    volumes:
-      - .:/app
     networks:
       - gkaizen-gestor_my_network
     env_file:
@@ -30,13 +23,8 @@ services:
     command: php send_consumer.php
 
   update_consumer:
-    build:
-      context: .
-      dockerfile: dockerfile
-    image: php-app
+    image: php-app:latest
     container_name: update_consumer
-    volumes:
-      - .:/app
     networks:
       - gkaizen-gestor_my_network
     env_file:
@@ -45,13 +33,8 @@ services:
     command: php update_consumer.php
 
   upsert_consumer:
-    build:
-      context: .
-      dockerfile: dockerfile
-    image: php-app
+    image: php-app:latest
     container_name: upsert_consumer
-    volumes:
-      - .:/app
     networks:
       - gkaizen-gestor_my_network
     env_file:
